@@ -57,11 +57,11 @@ contact_manager.exe
 ```
 
 The program will start, and you'll be prompted to input contact information.
-
+ 
 ---
 
 ### **Program Features and Explanation:**
-
+ 
 1. **Add Contact Information:**
    - You will be asked to input:
      - Name
@@ -85,11 +85,14 @@ The program will start, and you'll be prompted to input contact information.
 
 5. **File Decryption:**
    - When opening the file in the future, you will need the password to decrypt it. The program will ask for the password when you run it.
-
+   -
+   in order to see your file :
+   - Openssl enc -d -aes-256-cbc -pbkdf2 -in xontacts.txt -pass pass: Yourcode
+ 
 ---
 
 ### **Important Notes:**
-
+ 
 - **Encrypted File:** The contact information is stored in an encrypted format to protect privacy.
 - **Nickname Validation:** The program checks if a nickname already exists in a file (`nicknames.txt`). If it does, it prevents adding the same nickname again.
 - **Country Information:** The program can map phone numbers to their respective countries based on the country code.
@@ -97,7 +100,7 @@ The program will start, and you'll be prompted to input contact information.
 ---
 
 ### **Example:**
-
+ 
 1. **Running the program:**
    - After starting the program, you'll be prompted to enter your password if the contact file already exists. If it doesn't exist, you'll be asked to create a new password.
 
