@@ -32,25 +32,75 @@ class Contact {
 };
 const std::map<std::string, std::string> Contact::countryCodes = {
 
-                	{"+1", "United States"},
-			{"+49", "Germany"},
-			{"+44", "United Kindom"},
-			{"+33", "France"},
-			{"+34", "Spain"},
-			{"+55", "Brazil"},
-			{"+57", "Colombia"},
-			{"+91", "India"},
-			{"+52", "Mexico"},
-			{"+61", "Australia"},
-			{"+39", "Italy"},
-			{"+34", "Spain"},
-			{"+81", "Japan"},
-			{"+86", "China"},
-			{"+7", "Russia"},
-			{"+20", "Egypt"},
-			{"+27", "South Africa"},
-			{"+31", "Netherlands"},
-			{"+41", "Switzerland"}
+{"+1", "United States"},
+{"+49", "Germany"},
+{"+44", "United Kingdom"},
+{"+33", "France"},
+{"+34", "Spain"},
+{"+55", "Brazil"},
+{"+57", "Colombia"},
+{"+91", "India"},
+{"+52", "Mexico"},
+{"+61", "Australia"},
+{"+39", "Italy"},
+{"+81", "Japan"},
+{"+86", "China"},
+{"+7", "Russia"},
+{"+20", "Egypt"},
+{"+27", "South Africa"},
+{"+31", "Netherlands"},
+{"+41", "Switzerland"},
+{"+32", "Belgium"},
+{"+45", "Denmark"},
+{"+46", "Sweden"},
+{"+47", "Norway"},
+{"+48", "Poland"},
+{"+36", "Hungary"},
+{"+30", "Greece"},
+{"+351", "Portugal"},
+{"+420", "Czech Republic"},
+{"+421", "Slovakia"},
+{"+386", "Slovenia"},
+{"+385", "Croatia"},
+{"+370", "Lithuania"},
+{"+371", "Latvia"},
+{"+372", "Estonia"},
+{"+90", "Turkey"},
+{"+62", "Indonesia"},
+{"+63", "Philippines"},
+{"+64", "New Zealand"},
+{"+82", "South Korea"},
+{"+66", "Thailand"},
+{"+94", "Sri Lanka"},
+{"+92", "Pakistan"},
+{"+880", "Bangladesh"},
+{"+351", "Portugal"},
+{"+351", "Luxembourg"},
+{"+53", "Cuba"},
+{"+58", "Venezuela"},
+{"+51", "Peru"},
+{"+56", "Chile"},
+{"+54", "Argentina"},
+{"+64", "New Zealand"},
+{"+91", "Maldives"},
+{"+973", "Bahrain"},
+{"+965", "Kuwait"},
+{"+974", "Qatar"},
+{"+968", "Oman"},
+{"+971", "United Arab Emirates"},
+{"+84", "Vietnam"},
+{"+1", "Canada"},
+{"+92", "Afghanistan"},
+{"+213", "Algeria"},
+{"+374", "Armenia"},
+{"+994", "Azerbaijan"},
+{"+375", "Belarus"},
+{"+359", "Bulgaria"},
+{"+385", "Serbia"},
+{"+372", "Estonia"},
+{"+386", "Montenegro"},
+{"+355", "Albania"}
+
 
 };
 
@@ -137,8 +187,6 @@ std::string Contact::country(const std::string& prefix) const {
 	return it->second;
 	}
 	return "Unknown";
-	std::cout << "debug Prefix: " << prefix <<std::endl;
-
 }
 //-
 std::string Contact::sherl(const std::string& alias, std::string name) const {
@@ -324,12 +372,13 @@ void decryptFile(const std::string& filename, const std::string& password){
 	std::cout << "File decrypted successfully and original file replaced."<<std::endl;
 }
 int main () {
+
 	std::string name, alias, comment, prefix, number;
 	int day, month, year;
 	std::string password;
 	std::string filename = "xontacts.txt";
-         
-	std::cout << "looking for your encrypted file, if i can't find it i'll create it."<<std::endl;
+	
+	std::cout << "Searching for your encrypted file, creating it if not found."<<std::endl;
 	std::ifstream inFile(filename);
 	bool fileExists = inFile.good();
 	inFile.close();
@@ -339,48 +388,51 @@ int main () {
 	decryptFile(filename, password);
 	} else {
 	 password = getpass("Enter a new Pin to create and encrypt the file: ");
-}
-
+}       
+        std::system("figlet 'My Contacts!'");
+	std::cout<< "------------------"<<std::endl;
 	std::cout << "Hey Buddy, Let's Add Someone" <<std::endl;
-	std::cout << "Add Name: " <<std::endl;
+	std::cout << "> Add Name: " <<std::endl;
 	std::getline(std::cin, name);
 	name = toLowerCase(name);
-	std::cout << "Add Nickname: " <<std::endl;
+	std::cout << "> Add Nickname: " <<std::endl;
 	std::getline(std::cin, alias);
 	alias = toLowerCase(alias);
-	std::cout <<"Add Country Code: " <<std::endl;
+	std::cout <<"> Add Country Code (e.g., +43): " <<std::endl;
 	std::getline(std::cin, prefix);
 
 	bool validNumber = false;
 	while(!validNumber){
-	std::cout << "Add Phone Number: " <<std::endl;
+	std::cout << "> Add Phone Number: " <<std::endl;
 	std::getline(std::cin, number); 
 	if (!veriNumber(number)){
-		std::cout << "El numero no es valido, no se guardaran los datos. \n";
+		std::cout << "The number is not valid, the data will not be saved. \n";
 		return 1;
 	}
 	if (isNumberValid(number)){
 validNumber = true;
 	}else {
-		std::cout << "El Numero no es valido, porfavoringresa solo numeros"<< std::endl;
+		std::cout << "The number is not valid, please enter only numbers."<< std::endl;
 	}
 	}
-	std::cout <<"Add Birthday dd mm yyyy: " <<std::endl;
+	std::cout <<"> Add Birthday, dd mm yyyy: " <<std::endl;
 	std::cin >> day >> month >> year;
 	std::cin.ignore();
-	std::cout <<"Add Comment: " <<std::endl;
+	std::cout <<"> Add Comment: " <<std::endl;
 	std::getline (std::cin, comment);
+	std::cout<< "------------------"<<std::endl;
 
 	Contact contact(name, alias, number, "", prefix, day, month, year);
 
-        std::cout << "Name: " << name <<"\n";
-	std::cout << "Born: " << day <<"."<< month << "." << year <<"\n";
-	std::cout << "Nickname: " << alias <<"\n";
-	std::cout << "Number: " << number <<"\n";
-	std::cout << "Age: " << contact.age(day, month, year) << " years old\n";
-	std::cout <<"Zodiac sign: " << contact.zodiac(day, month) << "\n"; 
-	std::cout << "Country: " << contact.country(prefix) << "\n"; 
-	std::cout << "Comment: " << comment << std::endl;
+        std::cout << "* Name: " << name <<"\n";
+	std::cout << "* Born: " << day <<"."<< month << "." << year <<"\n";
+	std::cout << "* Nickname: " << alias <<"\n";
+	std::cout << "* Number: " << number <<"\n";
+	std::cout << "* Age: " << contact.age(day, month, year) << " years old\n";
+	std::cout << "* Zodiac sign: " << contact.zodiac(day, month) << "\n"; 
+	std::cout << "* Country: " << contact.country(prefix) << "\n"; 
+	std::cout << "* Comment: " << comment << std::endl;
+	std::cout<< "------------------"<<std::endl;
         std::string resultNickname = contact.sherl(alias, name); 
 	std::string resultContact = saveToFile(contact, day, month, year, number, comment, name, alias, prefix );
 	std::cout << resultNickname << "\n";
